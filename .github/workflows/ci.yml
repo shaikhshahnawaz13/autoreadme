@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run unit tests
+        run: node tests/autoreadme.test.js
+
+      - name: Check no real secrets committed
+        run: |
+          # Check for actual Groq keys (gsk_ followed by 40+ chars) — not just the prefix string
+          if grep -rE "gsk_[a-zA-Z0-9]{40,}" --include="*.js" --include="*.html" --include="*.css" \
+            --exclude-dir=node_modules --exclude="config.js" .; then
+            echo "ERROR: Real Groq API key found in committed files!"
+            exit 1
+          fi
+          # Check for actual GitHub tokens (ghp_ followed by 35+ chars)
+          if grep -rE "ghp_[a-zA-Z0-9]{35,}" --include="*.js" --include="*.html" --include="*.css" \
+            --exclude-dir=node_modules --exclude="config.js" .; then
+            echo "ERROR: Real GitHub token found in committed files!"
+            exit 1
+          fi
+          echo "✓ No real secrets found in committed files."

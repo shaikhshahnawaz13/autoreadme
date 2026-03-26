@@ -1,0 +1,26 @@
+{
+  "name": "autoreadme",
+  "version": "2.0.0",
+  "description": "AI-powered README generator — paste a GitHub URL, get a production-quality README instantly",
+  "author": "shaikhshahnawaz13",
+  "license": "MIT",
+  "homepage": "https://auto-readme.netlify.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shaikhshahnawaz13/autoreadme.git"
+  },
+  "scripts": {
+    "test": "node tests/autoreadme.test.js",
+    "serve": "npx serve .",
+    "lint": "echo 'No linter configured'"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "keywords": [
+    "readme", "generator", "ai", "github", "groq", "llama", "open-source", "developer-tools"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
